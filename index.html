@@ -4,11 +4,17 @@
   <meta charset="UTF-8">
   <meta name="robots" content="noindex, nofollow">
   <title>Redirecionando…</title>
+
+  <!-- Fallback -->
+  <meta http-equiv="refresh" content="0; url=https://tintasqualyquimy.com.br/">
+
+  <!-- Canonical dinâmico -->
+  <link rel="canonical" id="canonical">
+
   <script>
     (function () {
       var NOVO = "https://tintasqualyquimy.com.br";
 
-      /* Mapa completo de páginas conhecidas do domínio antigo */
       var PAGINAS = [
         "/404.html",
         "/blog/cidades.html",
@@ -76,43 +82,43 @@
         "/termos-de-uso.html"
       ];
 
-      /* Pega o caminho atual (ex: /categorias/tintas.html) */
       var caminho = window.location.pathname;
-
-      /* Remove prefixo do subdomínio se o GitHub Pages servir em /tintasqualyquimy/ */
       caminho = caminho.replace(/^\/tintasqualyquimy/, "");
 
-      /* Normaliza raiz */
+      document.addEventListener("DOMContentLoaded", function () {
+        var canon = document.getElementById("canonical");
+        if (canon) {
+          canon.href = NOVO + (caminho === "/" ? "/" : caminho);
+        }
+      });
+
       if (caminho === "" || caminho === "/") {
         window.location.replace(NOVO + "/");
         return;
       }
 
-      /* Verifica se o caminho é uma página conhecida */
-      var destino;
-      if (PAGINAS.indexOf(caminho) !== -1) {
-        destino = NOVO + caminho;
-      } else {
-        /* Página desconhecida → home do novo domínio */
-        destino = NOVO + "/";
-      }
+      var destino = PAGINAS.indexOf(caminho) !== -1
+        ? NOVO + caminho
+        : NOVO + "/";
 
-      /* Redireciona imediatamente */
       window.location.replace(destino);
     })();
   </script>
 </head>
+
 <body>
-  <p>Redirecionando para o novo site…<br>
-     Se não acontecer automaticamente,
-     <a id="link" href="https://tintasqualyquimy.com.br/">clique aqui</a>.
+  <p>
+    Redirecionando para o novo site…<br>
+    Se não acontecer automaticamente,
+    <a id="link" href="https://tintasqualyquimy.com.br/">clique aqui</a>.
   </p>
+
   <script>
-    /* Atualiza o link visível com o destino real */
     try {
-      var p = window.location.pathname.replace(/^\/tintasqualyquimy/, "");
-      if (p && p !== "/") {
-        document.getElementById("link").href = "https://tintasqualyquimy.com.br" + p;
+      var caminho = window.location.pathname.replace(/^\/tintasqualyquimy/, "");
+      if (caminho && caminho !== "/") {
+        document.getElementById("link").href =
+          "https://tintasqualyquimy.com.br" + caminho;
       }
     } catch(e){}
   </script>
